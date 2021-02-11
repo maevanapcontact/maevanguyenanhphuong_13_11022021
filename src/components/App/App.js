@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import Nav from "../Nav/Nav";
 import Homepage from "../Homepage/Homepage";
 import LoginPage from "../LoginPage/LoginPage";
+import ProfilePage from "../ProfilePage/ProfilePage";
 import Footer from "../Footer/Footer";
 
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/login" component={LoginPage} />
+          <Route path="/profile" component={ProfilePage} />
         </Switch>
         <Footer />
       </div>
