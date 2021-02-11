@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import Nav from "../Nav/Nav";
 import Homepage from "../Homepage/Homepage";
+import Footer from "../Footer/Footer";
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Homepage} />
         </Switch>
+        <Footer />
       </div>
     );
   }
