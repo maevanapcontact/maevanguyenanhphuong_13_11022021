@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import Nav from "../Nav/Nav";
 import Homepage from "../Homepage/Homepage";
+import LoginPage from "../LoginPage/LoginPage";
 import Footer from "../Footer/Footer";
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
         <Nav />
         <Switch>
           <Route exact path="/" component={Homepage} />
+          <Route path="/login" component={LoginPage} />
         </Switch>
         <Footer />
       </div>
