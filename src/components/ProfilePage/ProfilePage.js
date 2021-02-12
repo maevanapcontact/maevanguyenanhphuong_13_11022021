@@ -48,18 +48,22 @@ class ProfilePage extends Component {
           <h1>
             Welcome back
             <form onSubmit={this.handleSubmit}>
-              <label className="sr-only" htmlFor="firstname">
-                Firstname
-              </label>
-              <input type="text" id="firstname" />
-              <label className="sr-only" htmlFor="lastname">
-                Lastname
-              </label>
-              <input type="text" id="lastname" />
-              <input type="submit" value="Save" />
+              <div className="header-form-group">
+                <label className="sr-only" htmlFor="firstname">
+                  Firstname
+                </label>
+                <input type="text" id="firstname" placeholder="Tony" />
+                <label className="sr-only" htmlFor="lastname">
+                  Lastname
+                </label>
+                <input type="text" id="lastname" placeholder="Jarvis" />
+              </div>
+              <div className="header-form-group">
+                <input className="edit-button" type="submit" value="Save" />
+                <input className="edit-button" type="button" value="Cancel" />
+              </div>
             </form>
           </h1>
-          <button className="edit-button">Edit Name</button>
         </header>
         <h2 className="sr-only">Accounts</h2>
         {accounts.map((elt) => (

@@ -7,7 +7,7 @@ class Nav extends Component {
   render() {
     return (
       <nav className="main-nav">
-        <Link className="main-nav-logo" to="./index.html">
+        <Link className="main-nav-logo" to="/">
           <img
             className="main-nav-logo-image"
             src="./images/argentBankLogo.png"
@@ -15,12 +15,23 @@ class Nav extends Component {
           />
           <h1 className="sr-only">Argent Bank</h1>
         </Link>
-        <div>
-          <Link className="main-nav-item" to="./sign-in.html">
-            <span className="fa fa-user-circle"></span>
-            Sign In
-          </Link>
-        </div>
+        {true ? (
+          <div>
+            <Link className="main-nav-item" to="/login">
+              <span className="fa fa-user-circle"></span>
+              Sign In
+            </Link>
+          </div>
+        ) : (
+          <div className="main-nav-logout">
+            <span className="fas fa-user main-nav-user"></span>
+            <span className="main-nav-name">Tony</span>
+            <Link className="main-nav-item" to="/">
+              <span className="fas fa-sign-out-alt main-nav-out"></span>
+              Sign out
+            </Link>
+          </div>
+        )}
       </nav>
     );
   }

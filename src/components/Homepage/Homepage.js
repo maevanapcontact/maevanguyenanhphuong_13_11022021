@@ -26,6 +26,7 @@ class Homepage extends Component {
           <h2 className="sr-only">Features</h2>
           {features.map((elt) => (
             <FeatureItem
+              key={elt.id}
               imgSrc={elt.imgSrc}
               imgAlt={elt.imgAlt}
               title={elt.title}
