@@ -9,21 +9,37 @@ import "./LoginPage.scss";
 class LoginPage extends Component {
   constructor() {
     super();
+    this.state = {
+      emailInput: "",
+      passwordInput: "",
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleInputChange(evt) {
+    const target = evt.target;
+    const name = target.name;
+
+    this.setState({
+      [name]: target.value,
+    });
   }
 
   handleSubmit(evt) {
     evt.preventDefault();
+    const { emailInput, passwordInput } = this.state;
 
     const user = {
-      email: "tony@stark.com",
-      password: "password123",
+      email: emailInput,
+      password: passwordInput,
     };
 
     axios
       .post("http://localhost:3001/api/v1/user/login", user)
       .then((res) => {
-        this.props.login(user.email, user.password);
+        this.props.login(emailInput, passwordInput);
         console.log(res);
         console.log(this.props.user);
       })
@@ -39,11 +55,11 @@ class LoginPage extends Component {
           <form onSubmit={this.handleSubmit}>
             <div className="input-wrapper">
               <label htmlFor="username">Username</label>
-              <input type="text" id="username" />
+              <input type="text" id="username" name="emailInput" onChange={this.handleInputChange} />
             </div>
             <div className="input-wrapper">
               <label htmlFor="password">Password</label>
-              <input type="password" id="password" />
+              <input type="password" id="password" name="passwordInput" onChange={this.handleInputChange} />
             </div>
             <div className="input-remember">
               <input type="checkbox" id="remember-me" />

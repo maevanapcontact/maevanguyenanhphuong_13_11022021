@@ -12,6 +12,11 @@ import Account from "./Account";
 class ProfilePage extends Component {
   constructor() {
     super();
+    this.state = {
+      firstnameInput: "",
+      lastnameInput: "",
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -32,15 +37,25 @@ class ProfilePage extends Component {
       });
   }
 
+  handleInputChange(evt) {
+    const target = evt.target;
+    const name = target.name;
+
+    this.setState({
+      [name]: target.value,
+    });
+  }
+
   handleSubmit(evt) {
     evt.preventDefault();
     console.log(this.props.user);
+    const { firstnameInput, lastnameInput } = this.state;
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwMjhkYmM1M2E1N2MwMWFhNGViYjUyMiIsImlhdCI6MTYxMzMwNjM2MywiZXhwIjoxNjEzMzkyNzYzfQ.b0RgfyeuopH7naxC9l2ehXpLy4cqCBFkOpVwI76-oxM";
 
     const data = {
-      firstName: "Maeva",
-      lastName: "NGUYEN",
+      firstName: firstnameInput,
+      lastName: lastnameInput,
     };
 
     axios
@@ -48,7 +63,7 @@ class ProfilePage extends Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        this.props.editProfile("id", token, data.firstName, data.lastName);
+        this.props.editProfile("id", token, firstnameInput, lastnameInput);
         console.log(res);
       })
       .catch((err) => console.log(err));
@@ -65,11 +80,11 @@ class ProfilePage extends Component {
                 <label className="sr-only" htmlFor="firstname">
                   Firstname
                 </label>
-                <input type="text" id="firstname" placeholder="Tony" />
+                <input type="text" id="firstname" placeholder="Tony" name="firstnameInput" onChange={this.handleInputChange} />
                 <label className="sr-only" htmlFor="lastname">
                   Lastname
                 </label>
-                <input type="text" id="lastname" placeholder="Jarvis" />
+                <input type="text" id="lastname" placeholder="Jarvis" name="lastnameInput" onChange={this.handleInputChange} />
               </div>
               <div className="header-form-group">
                 <input className="edit-button" type="submit" value="Save" />
