@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
 
+import { logout } from "../../actions/userActions";
 import "./Nav.scss";
 
 class Nav extends Component {
@@ -15,7 +18,7 @@ class Nav extends Component {
           />
           <h1 className="sr-only">Argent Bank</h1>
         </Link>
-        {true ? (
+        {!this.props.user.logStatus ? (
           <div>
             <Link className="main-nav-item" to="/login">
               <span className="fa fa-user-circle"></span>
@@ -26,7 +29,7 @@ class Nav extends Component {
           <div className="main-nav-logout">
             <span className="fas fa-user main-nav-user"></span>
             <span className="main-nav-name">Tony</span>
-            <Link className="main-nav-item" to="/">
+            <Link className="main-nav-item" to="/" onClick={() => this.props.logout("id")}>
               <span className="fas fa-sign-out-alt main-nav-out"></span>
               Sign out
             </Link>
@@ -37,4 +40,14 @@ class Nav extends Component {
   }
 }
 
-export default Nav;
+const mstp = state => ({
+  user: state.user,
+});
+
+const mdtp = dispatch => {
+  return bindActionCreators({
+    logout,
+  }, dispatch)
+};
+
+export default connect(mstp, mdtp)(Nav);

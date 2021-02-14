@@ -1,8 +1,17 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { login } from "../../actions/userActions";
 import axios from "axios";
 import "./LoginPage.scss";
 
 class LoginPage extends Component {
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   handleSubmit(evt) {
     evt.preventDefault();
 
@@ -13,7 +22,11 @@ class LoginPage extends Component {
 
     axios
       .post("http://localhost:3001/api/v1/user/login", user)
-      .then((res) => console.log(res))
+      .then((res) => {
+        this.props.login(user.email, user.password);
+        console.log(res);
+        console.log(this.props.user);
+      })
       .catch((err) => console.log(err));
   }
 
@@ -44,4 +57,14 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+const mstp = state => ({
+  user: state.user,
+});
+
+const mdtp = dispatch => {
+  return bindActionCreators({
+    login,
+  }, dispatch)
+};
+
+export default connect(mstp, mdtp)(LoginPage);
