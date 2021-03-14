@@ -21,8 +21,7 @@ class ProfilePage extends Component {
   }
 
   componentDidMount() {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwMjhkYmM1M2E1N2MwMWFhNGViYjUyMiIsImlhdCI6MTYxMzMwNjM2MywiZXhwIjoxNjEzMzkyNzYzfQ.b0RgfyeuopH7naxC9l2ehXpLy4cqCBFkOpVwI76-oxM";
+    const token = this.props.user.token;
     axios
       .post(
         "http://localhost:3001/api/v1/user/profile",
@@ -30,7 +29,8 @@ class ProfilePage extends Component {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((res) => {
-        console.log(res.data);
+        const { firstName, lastName } = res.data.body;
+        this.props.editProfile(firstName, lastName);
       })
       .catch((err) => {
         console.error(err);
@@ -48,10 +48,8 @@ class ProfilePage extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    console.log(this.props.user);
     const { firstnameInput, lastnameInput } = this.state;
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwMjhkYmM1M2E1N2MwMWFhNGViYjUyMiIsImlhdCI6MTYxMzMwNjM2MywiZXhwIjoxNjEzMzkyNzYzfQ.b0RgfyeuopH7naxC9l2ehXpLy4cqCBFkOpVwI76-oxM";
+    const token = this.props.user.token;
 
     const data = {
       firstName: firstnameInput,
@@ -63,13 +61,14 @@ class ProfilePage extends Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        this.props.editProfile("id", token, firstnameInput, lastnameInput);
-        console.log(res);
+        this.props.editProfile(firstnameInput, lastnameInput);
       })
       .catch((err) => console.log(err));
   }
 
   render() {
+    const { firstName, lastName } = this.props.user;
+
     return (
       <main className="main bg-dark">
         <header className="header">
@@ -80,11 +79,23 @@ class ProfilePage extends Component {
                 <label className="sr-only" htmlFor="firstname">
                   Firstname
                 </label>
-                <input type="text" id="firstname" placeholder="Tony" name="firstnameInput" onChange={this.handleInputChange} />
+                <input
+                  type="text"
+                  id="firstname"
+                  placeholder={firstName}
+                  name="firstnameInput"
+                  onChange={this.handleInputChange}
+                />
                 <label className="sr-only" htmlFor="lastname">
                   Lastname
                 </label>
-                <input type="text" id="lastname" placeholder="Jarvis" name="lastnameInput" onChange={this.handleInputChange} />
+                <input
+                  type="text"
+                  id="lastname"
+                  placeholder={lastName}
+                  name="lastnameInput"
+                  onChange={this.handleInputChange}
+                />
               </div>
               <div className="header-form-group">
                 <input className="edit-button" type="submit" value="Save" />
@@ -107,14 +118,17 @@ class ProfilePage extends Component {
   }
 }
 
-const mstp = state => ({
+const mstp = (state) => ({
   user: state.user,
 });
 
-const mdtp = dispatch => {
-  return bindActionCreators({
-    editProfile,
-  }, dispatch)
+const mdtp = (dispatch) => {
+  return bindActionCreators(
+    {
+      editProfile,
+    },
+    dispatch
+  );
 };
 
 export default connect(mstp, mdtp)(ProfilePage);

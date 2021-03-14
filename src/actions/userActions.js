@@ -12,10 +12,8 @@ export const logout = (id) => ({
   id,
 });
 
-export const editProfile = (id, token, firstName, lastName) => ({
+export const editProfile = (firstName, lastName) => ({
   type: types.EDIT_PROFILE,
-  id,
-  token,
   firstName,
   lastName,
 });

@@ -28,8 +28,12 @@ class Nav extends Component {
         ) : (
           <div className="main-nav-logout">
             <span className="fas fa-user main-nav-user"></span>
-            <span className="main-nav-name">Tony</span>
-            <Link className="main-nav-item" to="/" onClick={() => this.props.logout("id")}>
+            <span className="main-nav-name">{this.props.user.firstName}</span>
+            <Link
+              className="main-nav-item"
+              to="/"
+              onClick={() => this.props.logout("id")}
+            >
               <span className="fas fa-sign-out-alt main-nav-out"></span>
               Sign out
             </Link>
@@ -40,14 +44,17 @@ class Nav extends Component {
   }
 }
 
-const mstp = state => ({
+const mstp = (state) => ({
   user: state.user,
 });
 
-const mdtp = dispatch => {
-  return bindActionCreators({
-    logout,
-  }, dispatch)
+const mdtp = (dispatch) => {
+  return bindActionCreators(
+    {
+      logout,
+    },
+    dispatch
+  );
 };
 
 export default connect(mstp, mdtp)(Nav);
