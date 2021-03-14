@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -12,6 +13,7 @@ class LoginPage extends Component {
     this.state = {
       emailInput: "",
       passwordInput: "",
+      isAuth: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -34,19 +36,23 @@ class LoginPage extends Component {
     const user = {
       email: emailInput,
       password: passwordInput,
+      token: "",
     };
 
     axios
       .post("http://localhost:3001/api/v1/user/login", user)
       .then((res) => {
-        this.props.login(emailInput, passwordInput);
-        console.log(res);
-        console.log(this.props.user);
+        if (res.data.status === 200) {
+          this.props.login(emailInput, passwordInput, res.data.body.token);
+          this.setState({ isAuth: true });
+        }
       })
       .catch((err) => console.log(err));
   }
 
   render() {
+    if (this.state.isAuth) return <Redirect to="/profile" />;
+
     return (
       <main className="main bg-dark">
         <section className="sign-in-content">
@@ -55,11 +61,21 @@ class LoginPage extends Component {
           <form onSubmit={this.handleSubmit}>
             <div className="input-wrapper">
               <label htmlFor="username">Username</label>
-              <input type="text" id="username" name="emailInput" onChange={this.handleInputChange} />
+              <input
+                type="text"
+                id="username"
+                name="emailInput"
+                onChange={this.handleInputChange}
+              />
             </div>
             <div className="input-wrapper">
               <label htmlFor="password">Password</label>
-              <input type="password" id="password" name="passwordInput" onChange={this.handleInputChange} />
+              <input
+                type="password"
+                id="password"
+                name="passwordInput"
+                onChange={this.handleInputChange}
+              />
             </div>
             <div className="input-remember">
               <input type="checkbox" id="remember-me" />
@@ -73,14 +89,17 @@ class LoginPage extends Component {
   }
 }
 
-const mstp = state => ({
+const mstp = (state) => ({
   user: state.user,
 });
 
-const mdtp = dispatch => {
-  return bindActionCreators({
-    login,
-  }, dispatch)
+const mdtp = (dispatch) => {
+  return bindActionCreators(
+    {
+      login,
+    },
+    dispatch
+  );
 };
 
 export default connect(mstp, mdtp)(LoginPage);
