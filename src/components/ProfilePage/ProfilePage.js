@@ -72,37 +72,38 @@ class ProfilePage extends Component {
     return (
       <main className="main bg-dark">
         <header className="header">
-          <h1>
+          <h2>
             Welcome back
-            <form onSubmit={this.handleSubmit}>
-              <div className="header-form-group">
-                <label className="sr-only" htmlFor="firstname">
-                  Firstname
-                </label>
-                <input
-                  type="text"
-                  id="firstname"
-                  placeholder={firstName}
-                  name="firstnameInput"
-                  onChange={this.handleInputChange}
-                />
-                <label className="sr-only" htmlFor="lastname">
-                  Lastname
-                </label>
-                <input
-                  type="text"
-                  id="lastname"
-                  placeholder={lastName}
-                  name="lastnameInput"
-                  onChange={this.handleInputChange}
-                />
-              </div>
-              <div className="header-form-group">
-                <input className="edit-button" type="submit" value="Save" />
-                <input className="edit-button" type="button" value="Cancel" />
-              </div>
-            </form>
-          </h1>
+            <span className="header-name">{`${firstName} ${lastName}!`}</span>
+          </h2>
+          <form onSubmit={this.handleSubmit}>
+            <div className="header-form-group">
+              <label className="sr-only" htmlFor="firstname">
+                Firstname
+              </label>
+              <input
+                type="text"
+                id="firstname"
+                placeholder={firstName}
+                name="firstnameInput"
+                onChange={this.handleInputChange}
+              />
+              <label className="sr-only" htmlFor="lastname">
+                Lastname
+              </label>
+              <input
+                type="text"
+                id="lastname"
+                placeholder={lastName}
+                name="lastnameInput"
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="header-form-group">
+              <input className="edit-button" type="submit" value="Save" />
+              <input className="edit-button" type="button" value="Cancel" />
+            </div>
+          </form>
         </header>
         <h2 className="sr-only">Accounts</h2>
         {accounts.map((elt) => (

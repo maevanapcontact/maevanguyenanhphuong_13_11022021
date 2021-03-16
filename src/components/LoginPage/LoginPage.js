@@ -14,6 +14,7 @@ class LoginPage extends Component {
       emailInput: "",
       passwordInput: "",
       isAuth: false,
+      hasError: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -42,12 +43,13 @@ class LoginPage extends Component {
     axios
       .post("http://localhost:3001/api/v1/user/login", user)
       .then((res) => {
-        if (res.data.status === 200) {
-          this.props.login(emailInput, passwordInput, res.data.body.token);
-          this.setState({ isAuth: true });
-        }
+        this.props.login(emailInput, passwordInput, res.data.body.token);
+        this.setState({ isAuth: true, hasError: false });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        this.setState({ hasError: true });
+      });
   }
 
   render() {
@@ -76,6 +78,13 @@ class LoginPage extends Component {
                 name="passwordInput"
                 onChange={this.handleInputChange}
               />
+            </div>
+            <div
+              className={
+                this.state.hasError ? "sign-in-msg error" : "sign-in-msg"
+              }
+            >
+              Incorrect username or password.
             </div>
             <div className="input-remember">
               <input type="checkbox" id="remember-me" />

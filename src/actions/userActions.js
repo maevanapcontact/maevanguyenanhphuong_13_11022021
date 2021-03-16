@@ -7,9 +7,8 @@ export const login = (email, password, token) => ({
   token,
 });
 
-export const logout = (id) => ({
+export const logout = () => ({
   type: types.LOGOUT,
-  id,
 });
 
 export const editProfile = (firstName, lastName) => ({

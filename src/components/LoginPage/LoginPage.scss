@@ -30,7 +30,17 @@
   }
 
   &-icon {
-    font-size: 5rem;
+    font-size: 1rem;
+  }
+
+  &-msg {
+    margin-bottom: 1rem;
+    color: #cd2f39;
+    display: none;
+
+    &.error {
+      display: block;
+    }
   }
 }
 

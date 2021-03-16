@@ -32,7 +32,7 @@ class Nav extends Component {
             <Link
               className="main-nav-item"
               to="/"
-              onClick={() => this.props.logout("id")}
+              onClick={() => this.props.logout()}
             >
               <span className="fas fa-sign-out-alt main-nav-out"></span>
               Sign out
