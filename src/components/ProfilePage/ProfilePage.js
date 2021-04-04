@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import { accounts } from "../../data";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -67,7 +68,9 @@ class ProfilePage extends Component {
   }
 
   render() {
-    const { firstName, lastName } = this.props.user;
+    const { firstName, lastName, logStatus } = this.props.user;
+
+    if (!logStatus) return <Redirect to="/login" />;
 
     return (
       <main className="main bg-dark">
